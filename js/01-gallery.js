@@ -2,9 +2,10 @@ import { galleryItems } from './gallery-items.js';
 // Change code below this line
 
 const container = document.querySelector(".gallery");
- const markup = createMarkup(galleryItems)
+const markup = createMarkup(galleryItems)
   
-  container.insertAdjacentHTML('beforeend', markup);
+container.insertAdjacentHTML('beforeend', markup);
+container.addEventListener('click', handleGalleryItemClick);
 
 function createMarkup(arr) {
     return arr.map(({ preview, original, description }) => {
