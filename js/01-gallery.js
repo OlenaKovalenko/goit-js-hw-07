@@ -5,7 +5,7 @@ const container = document.querySelector(".gallery");
 const markup = createMarkup(galleryItems)
 
 container.insertAdjacentHTML('beforeend', markup);
-// container.addEventListener('click', handleGalleryItemClick);
+container.addEventListener('click', onGalleryItemClick);
 
 function createMarkup(arr) {
     return arr.map(({ preview, original, description }) => {
@@ -22,6 +22,33 @@ function createMarkup(arr) {
     }).join("")
 };
 
+function onGalleryItemClick(event) {
 
+  event.preventDefault();
+
+  if (event.target === event.currentTarget) {
+    return;
+  }
+
+  const targetElement = event.target;
+  const elementSource = targetElement.dataset.source;
+  
+  const instance = basicLightbox.create(`
+    <img src="${elementSource}" alt="${targetElement.alt}">
+`);
+
+  instance.show();
+
+  window.addEventListener('keydown', onEscKeyPress);
+
+  function onEscKeyPress(event) {
+   
+    if (event.code === 'Escape') {
+      window.removeEventListener('keydown', onEscKeyPress);
+      instance.close();
+    }
+    
+  }
+}
 
 console.log(galleryItems);
